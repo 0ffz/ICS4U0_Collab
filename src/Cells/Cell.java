@@ -8,9 +8,11 @@ import java.util.List;
 public class Cell {
     private double size;
     private List<Organelle> organelles = new ArrayList<>();
+    private double energy;
 
-    Cell(double s, List<Organelle> o) {
+    Cell(double s, List<Organelle> o, double e) {
         size = s;
+        energy = e;
         organelles.addAll(o);
     }
 
@@ -22,7 +24,11 @@ public class Cell {
         return organelles;
     }
 
-    public void doAction() {
+    public double getEnergy(){
+        return energy;
+    }
 
+    public void doAction(double e) {
+        energy -= e;
     }
 }

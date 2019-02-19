@@ -1,9 +1,9 @@
 package Organelles;
 
 public class Mitochondria extends Organelle {
-    Mitochondria(double s) {
-        super(s);
 
+    public Mitochondria(double s, double e) {
+        super(s, e);
     }
 
     @Override

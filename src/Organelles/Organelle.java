@@ -3,20 +3,23 @@ package Organelles;
 public class Organelle {
     private double size;
     private boolean isAlive;
+    private double energy;
 
-    Organelle(double s) {
+    public Organelle(double s, double e) {
         size = s;
+        isAlive = true;
+        energy = e;
     }
 
     public double getSize() {
         return size;
     }
 
-    public boolean isAlive() {
+    public boolean getIsAlive() {
         return isAlive;
     }
 
-    public void doAction() {
-
+    public void doAction(double e, String type) {
+        energy -= e;
     }
 }

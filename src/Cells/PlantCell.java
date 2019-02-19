@@ -5,11 +5,12 @@ import Organelles.Organelle;
 import java.util.List;
 
 public class PlantCell extends Cell {
-    PlantCell(double s, List<Organelle> o) {
-        super(s, o);
+    public PlantCell(double s, double e, List<Organelle> o) {
+        super(s, o, e);
     }
 
     @Override
-    public void doAction() {
+    public void doAction(double e, String type) {
+
     }
 }
