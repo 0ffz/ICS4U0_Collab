@@ -5,7 +5,7 @@ public class Lysosome extends Organelle{
         super (s, e);
     }
     @Override
-    public void doAction(double e){
+    public void doAction(double e, String type){
 
     }
 }

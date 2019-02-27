@@ -28,7 +28,7 @@ public class Cell {
         return energy;
     }
 
-    public void doAction(double e) {
+    public void doAction(double e, String type) {
         energy -= e;
     }
 }

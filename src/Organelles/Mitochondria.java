@@ -7,6 +7,6 @@ public class Mitochondria extends Organelle {
     }
 
     @Override
-    public void doAction() {
+    public void doAction(double e, String type) {
     }
 }

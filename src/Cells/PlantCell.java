@@ -11,6 +11,6 @@ public class PlantCell extends Cell {
 
     @Override
     public void doAction(double e, String type) {
-
+        Organelle.doAction(e, type);
     }
 }
