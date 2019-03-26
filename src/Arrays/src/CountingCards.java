@@ -21,43 +21,77 @@ public class CountingCards {
     public static void main(String[] args) {
         try {
             Scanner sc = new Scanner(new File("Cards.txt"));
-            String[][] cards = new String[4][13];
             List<String> lines = new ArrayList<>();
             while (sc.hasNextLine())
                 lines.add(sc.nextLine());
 
             for (int i = 0; i < lines.size() / 4; i++) {
                 for (int j = 0; j < 4; j++) {
+                    String hand = lines.get(i + j);
+                    //validity check
+                    if (hand.length() != 26) {
+                        System.out.println("Invalid Hand");
+                        continue;
+                    }
+
                     int points = 0;
-                    //suits organized by D Diamonds, H Hearts, C Clubs, S Spades
-                    int[] suitCount = new int[4];
+                    boolean isValid = true;
+                    //suits organized by S Spades, H Hearts, D Diamonds, C Clubs
+                    ArrayList<String>[] suits = new ArrayList[4];
 
                     for (int k = 0; k < 26; k += 2) {
-                        String card = (lines.get(i + j).substring(k, k+1));
-                        cards[j][k / 2] = card;
-                        
+                        String card = (hand.substring(k, k + 1));
+
+                        //adding points and validity check
                         char face = card.charAt(0);
                         char suit = card.charAt(1);
-                        
-                        if(face == 'A')
+
+                        if (face == 'A')
                             points += 4;
-                        else if(face == 'K')
+                        else if (face == 'K')
                             points += 3;
-                        else if(face == 'Q')
+                        else if (face == 'Q')
                             points += 2;
-                        else if(face == 'J')
+                        else if (face == 'J')
                             points += 1;
+                        else if (!(face >= '2' && face <= '9' || face == 'T')) { //if the card isn't valid
+                            isValid = false;
+                            break;
+                        }
 
-                        if(suit == 'D')//TODO adds to suitcount based on what suit it is
-                            suitCount[0] ++;
-                        
+                        if (suit == 'S')//TODO FIX ORDER
+                            suits[0].add(card);
+                        else if (suit == 'H')
+                            suits[1].add(card);
+                        else if (suit == 'D')
+                            suits[2].add(card);
+                        else if (suit == 'C')
+                            suits[3].add(card);
+                        else {
+                            isValid = false;
+                            break;
+                        }
+
+                        //organize as we go
+                        cards[j][k / 2] = card;
+
+
                     }
-                    //TODO add points depending on suitcount
-                    if(suitCount == 1)
 
+                    if (!isValid) {
+                        System.out.println("Invalid Hand");
+                        continue;
+                    }
+
+                    //TODO add points depending on suitcount
+                    for (int k = 0; k < 4; k++) {
+                        if (suitCount[k] < 3)
+                            points += 3 - suitCount[k];
+                    }
+                    System.out.println(hand + " has " + points + " points");
                 }
-                
-                
+
+
             }
 
 
