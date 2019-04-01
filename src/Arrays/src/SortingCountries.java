@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class SortingCountries
 {
-    private ArrayList<String> countryList = new ArrayList();
-    private ArrayList<String> capitalList = new ArrayList();
-    private ArrayList<String> populationList = new ArrayList();
-    private ArrayList<String> areaList = new ArrayList();
+    private ArrayList<String> countryList = new ArrayList<String>();
+    private ArrayList<String> capitalList = new ArrayList<String>();
+    private ArrayList<String> populationList = new ArrayList<String>();
+    private ArrayList<String> areaList = new ArrayList<String>();
 
     //TODO create a sortingCountries constructor
     //TODO create a file-reading method
