@@ -8,17 +8,26 @@ public class StudentMarksA {
             while (br.readLine() != null){
                 lines++;
             }
-            String[] studentNames = new String[lines/2];
-            String[] studentMarks = new String[lines/2];
-            for (int x = 0; x <= lines; x++){
+        }
+        catch (IOException e){
+            System.out.println("Oh no!");
+        }
+        try{
+            BufferedReader br = new BufferedReader(new FileReader("A7-1.txt"));
+            String[] studentNames = new String[lines/2 + 1];
+            String[] studentMarks = new String[lines/2 + 1];
+            for (int x = 0; x < lines; x++){
                 if (x % 2 == 0)
-                    studentNames [x] = br.readLine();
+                    studentNames [x/2] = br.readLine();
                 else
-                    studentMarks [x] = br.readLine();
+                    if (x == 1)
+                        studentMarks [x - 1] = br.readLine();
+                    else
+                        studentMarks [(x - 1)/2] = br.readLine();
             }
 
             for (int x = 0; x < lines/2; x++){
-                System.out.println(String.format("%-5s= %s", studentNames [x], studentMarks [x]));
+                System.out.printf("%-10s%s\n", studentNames [x], studentMarks [x]);
             }
         }
         catch (IOException e){
