@@ -2,19 +2,35 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+
+/**
+ * This class shows all possible words for phone number button codes using a dictionary
+ *
+ * <h2>Course Info:</h2>
+ * ICS4U0 with Krasteva, V.
+ *
+ * @author Daniel Voznyy
+ * @version 1 03.20.19
+ */
 public class Phonepad {
     public static HashMap<String, List<String>> words = new HashMap<>();
 
+    /**
+     * The main algorithm for converting and searching for words
+     *
+     * @param args command line arguments for main method
+     */
     public static void main(String[] args) {
         try {
             Scanner sc = new Scanner(new File("DICT.txt"));
             long startTime = System.currentTimeMillis();
             System.out.println("Pre-encoding file");
 
-            while (sc.hasNextLine()) {
+            //add all the possible words for each "encoded" number
+            while (sc.hasNextLine()) { //for every word in the dictionary
                 String word = sc.nextLine();
                 String encoded = encode(word);
-                if (encoded == null)
+                if (encoded == null) //if word can't be formatted into phone number codes, don't add it
                     continue;
 
                 //if the words map doesn't already contain a list of words for a number, add a new ArrayList containing our word
@@ -23,7 +39,6 @@ public class Phonepad {
                     words.get(encoded).add(word);
                 }
             }
-
             sc.close();
 
             //display the time difference between the start and current time
@@ -31,31 +46,31 @@ public class Phonepad {
 
             Scanner inputSc = new Scanner(System.in);
             String input;
+            //instructions for user
             System.out.println("Type in a number to look up words for, or type \"exit\" to exit. Your number should be between 1 and 4 letters (but the program works regardless)");
+            //keep asking for numbers until user types "exit"
             while (!(input = inputSc.nextLine().toLowerCase()).equals("exit")) {
                 startTime = System.currentTimeMillis();
 
-                try {
-                    if (Long.parseLong(input) < 0) //simultaneously check if the number is a valid integer and if it is positive using long to allow for longer number lengths
-                        System.out.println("Your number must be positive, try again");
-                    else
-                        try { //if words.get(input) returns nothing, the .toString will cause an exception, which we know means we didn't find that word
-                            System.out.println(words.get(input).toString());
-                        } catch (NullPointerException e) {
-                            System.out.println("No words found in our dictionary for those numbers, try another one");
-                        }
-                } catch (NumberFormatException e) {
-                    System.out.println("Your number must be a valid integer, try again");
+                try { //if words.get(input) returns nothing, the .toString will cause an exception, which we know means we didn't find that word
+                    System.out.println(words.get(input).toString());
+                } catch (NullPointerException e) {
+                    System.out.println("No words found in our dictionary for that code, try another one");
                 }
 
                 System.out.println("Completed operation in " + (System.currentTimeMillis() - startTime) + " ms");
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Encodes each word by reading it letter by letter and assigning a number to it
+     *
+     * @param word the word to be encoded
+     * @return the encoded word; null if the word can't be put into phone button form
+     */
     public static String encode(String word) {
         //better than constantly adding to a String object, since the String creates a copy of itself when doing so
         StringBuilder encoded = new StringBuilder();
