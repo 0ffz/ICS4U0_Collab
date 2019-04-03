@@ -2,8 +2,44 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * The StudentMarksB class reads a file which contains student's names and marks and then merge sorts the names and their marks by least to greatest
+ * in terms of their marks and then prints the name with the mark next to it spaced properly.
+ *
+ * <h2>Course Info:</h2>
+ * ICS4U0 with Krasteva, V.
+ *
+ * @author Daniel Voznyy, Enfei Zhang, Ivan Karlov
+ * @version 1 04.02.19
+ */
+
 public class StudentMarksC {
 
+    /**
+     * This is the method that splits the arrays into their sections to be further sorted in the merge method.
+     *
+     * @param a The marks of the students
+     * @param b The names of the students
+     * @param n The size of the array
+     *
+     * <b>Local Variables</b>
+     * <p>
+     * <b>mid</b> The place of the middle element in the array.
+     * <p>
+     * <b>tempA[]</b> Integer array to hold the integer values of the marks.
+     * <p>
+     * <b>l[]</b> Integer array to hold all the values of tempA to the left of the middle.
+     * <p>
+     * <b>r[]</b> Integer array to hold all the values of tempA to the right of the middle.
+     * <p>
+     * <b>ll[]</b> String array to hold all the values of a to the left of the middle.
+     * <p>
+     * <b>lr[]</b> String array to hold all the values of a to the right of the middle.
+     * <p>
+     * <b>bl[]</b> String array to hold all the values of b to the left of the middle.
+     * <p>
+     * <b>br[]</b> String array to hold all the values of b to the right of the middle.
+     */
     public static void mergeSort(String[] a, String[] b, int n) {
         if (n < 2) {
             return;
@@ -36,6 +72,28 @@ public class StudentMarksC {
         merge(a, tempA, l, r, ll, lr, b, bl, br, mid, n - mid);
     }
 
+    /**
+     *
+     * @param a The marks as Strings.
+     * @param a2 The marks as integers.
+     * @param l The values of all the elements to the left of the middle in the a2 array.
+     * @param r The values of all the elements to the right of the middle in the a2 array.
+     * @param ll The values of all the elements to the left of the middle in the a array.
+     * @param lr The values of all the elements to the right of the middle in the a array.
+     * @param b The names of the students.
+     * @param bl The values of all the elements to the left of the middle in the b array.
+     * @param br The values of all the elements to the right of the middle in the b array.
+     * @param left The amount of items on the left side of the array.
+     * @param right The amount of items on the right side of the array.
+     *
+     * <b>Local Variables</b>
+     * <p>
+     * <b>i</b> Integer to know the place of the values of the array
+     * <p>
+     * <b>j</b> Integer to know the place of the values of the array
+     * <p>
+     * <b>k</b> Integer to know the place of the values of the array
+     */
     public static void merge(String[] a, int[] a2, int[] l, int[] r, String[] ll, String[] lr, String[] b, String[] bl, String[] br, int left, int right) {
 
         int i = 0, j = 0, k = 0;
@@ -71,6 +129,23 @@ public class StudentMarksC {
         }
     }
 
+    /**
+     * This is the main method that reads the "A7-1.txt" file and calls the mergeSort() method to sort the
+     * values in least to greatest order and then print them all while being spaced nicely.
+     *
+     * @param args [ ]  String array that allows command line
+     * parameters to be used when executing the program.
+     *
+     * <b>Local Dictionary</b>
+     * <p>
+     * <b>br</b> Instance of the BufferedReader class to read the fil A7-1.txt.
+     * <p>
+     * <b>line</b> int variable to keep track of the amount of lines in the file.
+     * <p>
+     * <b>studentNames[]</b> String array to hold the names of the students.
+     * <p>
+     * <b>studentMarks[]</b> String array to hold the marks of the students
+     */
     public static void main(String[] args) {
         int lines = 0;
         try {
