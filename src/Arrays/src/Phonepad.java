@@ -24,6 +24,8 @@ public class Phonepad {
                 }
             }
 
+            sc.close();
+
             //display the time difference between the start and current time
             System.out.println("Encoding finished in " + (System.currentTimeMillis() - startTime) + " ms");
 
