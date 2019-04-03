@@ -29,15 +29,9 @@ public class SortingCountries {
             while (inFile.hasNextLine()) {
                 String line = inFile.nextLine().replace(",", "");
 
-                String[] location = getLocationFromLine(line);
-                String country = location[0];
-                String city = location[1];
-                String population = location[3];
-                //TODO put populations into their respective lists
-                System.out.println("population: "+ population);
+                String[] location = getCountryFromLine(line);
 
-                countryList.add(country);
-                capitalList.add(city);
+                System.out.println("population: " + String.format ("%.0f",location[3])); //String.format stops scientific notation
             }
             inFile.close();
         } catch (FileNotFoundException f) {
@@ -45,6 +39,10 @@ public class SortingCountries {
         }
     }
 
+    public void sortAndWrite()
+    {
+
+    }
     //TODO create a methods that write to sortedByCountry.txt(not yet created) and sortedByPopulations.txt (not yet created)
 
     /**
@@ -53,15 +51,20 @@ public class SortingCountries {
      * @param line the line read from the file
      * @return an array containing the Country in the 0th index, and the City in 1st
      */
-    public String[] getLocationFromLine(String line) {
+    public String[] getCountryFromLine(String line) {
         String[] split = line.split("\\s+");
 //     System.out.println(Arrays.toString(split));
         String[] location = new String[4];
+        String country;
+        String capital;
+        double area;
+        double population;
 
         for (int i = 0; i < split.length; i++) {
             try {
+
                 areaList.add(split[i]);
-                Integer.parseInt(split[i]);
+                populationList.add(split[i + 1]);
                 String unseparatedLocation = "";
                 for (int j = 0; j < i; j++) {
                     unseparatedLocation += split[j];
@@ -70,11 +73,11 @@ public class SortingCountries {
                 }
                 for (String multiWordCountry : multiWordCountries) {
                     if (unseparatedLocation.startsWith(multiWordCountry)) {
-                        location[0] = multiWordCountry;
+                        country = multiWordCountry;
                         if (multiWordCountry.length() != unseparatedLocation.length())
-                            location[1] = unseparatedLocation.substring(multiWordCountry.length() + 1);
+                            capital = unseparatedLocation.substring(multiWordCountry.length() + 1);
                         else
-                            location[1] = "No City";
+                            location[1] = "No Capital";
                         return location;
                     }
                 }
@@ -87,4 +90,6 @@ public class SortingCountries {
         }
         return null;
     }
-}
+
+
+    }
