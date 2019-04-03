@@ -32,10 +32,8 @@ public class SortingCountries {
                 String[] location = getLocationFromLine(line);
                 String country = location[0];
                 String city = location[1];
-                String area = location[2];
                 String population = location[3];
-                //TODO put countries, capitals, populations and areas into their respective lists
-                System.out.println("area: "+ area);
+                //TODO put populations into their respective lists
                 System.out.println("population: "+ population);
 
                 countryList.add(country);
@@ -57,11 +55,12 @@ public class SortingCountries {
      */
     public String[] getLocationFromLine(String line) {
         String[] split = line.split("\\s+");
-//        System.out.println(Arrays.toString(split));
+//     System.out.println(Arrays.toString(split));
         String[] location = new String[4];
 
         for (int i = 0; i < split.length; i++) {
             try {
+                areaList.add(split[i]);
                 Integer.parseInt(split[i]);
                 String unseparatedLocation = "";
                 for (int j = 0; j < i; j++) {
@@ -81,7 +80,6 @@ public class SortingCountries {
                 }
                 location[0] = split[0];
                 location[1] = unseparatedLocation.substring(split[0].length() + 1);
-                //location[2] = split[2];
                 return location;
             } catch (NumberFormatException e) {
 
