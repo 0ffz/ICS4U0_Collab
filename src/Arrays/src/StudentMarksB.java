@@ -57,15 +57,15 @@ public class StudentMarksB {
             for (int x = 0; x < lines; x++){
                 if (x % 2 == 0)
                     studentNames.add(br.readLine());
-                else
-                if (x == 1)
+                else if (x == 1)
                     studentMarks.add(br.readLine());
                 else
                     studentMarks.add(br.readLine());
             }
             MergeSort.sort(studentNames, studentMarks, comparator);
             for (int x = 0; x < lines/2; x++){
-                System.out.printf("%-10s%s\n", studentNames, studentMarks);
+                System.out.printf("%-10s%s\n", studentNames.get(x), studentMarks.get(x));
+                System.out.println();
             }
         }
         catch (IOException e){

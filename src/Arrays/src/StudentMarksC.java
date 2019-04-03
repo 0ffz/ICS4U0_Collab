@@ -68,6 +68,7 @@ public class StudentMarksC {
             MergeSort.sort(studentMarks, studentNames, comparator);
             for (int x = 0; x < lines/2; x++){
                 System.out.printf("%-10s%s\n", studentNames.get(x), studentMarks.get(x));
+                System.out.println();
             }
         }
         catch (IOException e){
