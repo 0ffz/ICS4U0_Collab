@@ -1,7 +1,9 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javax.lang.model.element.NestingKind;
+import java.io.*;
+import java.sql.Array;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 //TODO create Javadoc
@@ -16,6 +18,7 @@ public class SortingCountries {
     public static void main(String[] args) {
         SortingCountries sc = new SortingCountries();
         sc.readFile();
+        sc.sortAndWrite();
     }
 
     //TODO create a file-reading method
@@ -36,6 +39,58 @@ public class SortingCountries {
     }
 
     public void sortAndWrite() {
+        ArrayList<Integer> tempPosList = new ArrayList<>();
+        ArrayList<Integer> tempPopList = new ArrayList<>();
+        Comparator<String> comp = new Comparator<String>() {
+            @Override
+            public int compare(String a, String b) {
+                return a.compareTo(b);
+            }
+        };
+        Comparator<Integer> comp2 = new Comparator<Integer>() {
+            @Override
+            public int compare(Integer integer, Integer t1) {
+                return integer.compareTo(t1);
+            }
+        };
+
+        MergeSort.sort(countryList, populationList, comp);
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter("sortedByCountry.txt"));
+            for (int i = 0; i < countryList.size(); i++) {
+                writer.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
+                System.out.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("OH NOOOOOO");
+        }
+
+        for (int x = 0; x < populationList.size(); x++)
+            tempPopList.add(Integer.parseInt(populationList.get(x)));
+        for (int x = 0; x < tempPopList.size(); x++)
+            tempPosList.add(x);
+        MergeSort.sort(tempPopList, tempPosList, comp2);
+        for (int x = 1; x < tempPopList.size(); x++) {
+            System.out.println(tempPopList);
+            String temp = populationList.get(x);
+            String temp2 = countryList.get(x - 1);
+            if (tempPosList.get(x) > tempPosList.get(x - 1)) {
+                populationList.set(x, tempPopList.get(tempPosList.get(x - 1)).toString());
+                populationList.set(x - 1, temp);
+            }
+        }
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter("sortedByPopulation.txt"));
+            for (int i = 0; i < countryList.size(); i++) {
+                writer.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
+                System.out.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("OH NOOOOOO");
+        }
+
 
     }
     //TODO create a methods that write to sortedByCountry.txt(not yet created) and sortedByPopulations.txt (not yet created)
