@@ -1,7 +1,9 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javax.lang.model.element.NestingKind;
+import java.io.*;
+import java.sql.Array;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 //TODO create Javadoc
@@ -13,13 +15,10 @@ public class SortingCountries {
     private ArrayList<String> populationList = new ArrayList<String>();
     private ArrayList<String> areaList = new ArrayList<String>();
 
-    public SortingCountries() {
-        readFile();
-    }
-
     public static void main(String[] args) {
         SortingCountries sc = new SortingCountries();
         sc.readFile();
+        sc.sortAndWrite();
     }
 
     //TODO create a file-reading method
@@ -29,18 +28,69 @@ public class SortingCountries {
             while (inFile.hasNextLine()) {
                 String line = inFile.nextLine().replace(",", "");
 
-                String[] location = getCountryFromLine(line);
-
-                System.out.println("population: " + String.format ("%.0f",location[3])); //String.format stops scientific notation
+                addCountry(line);
             }
             inFile.close();
+
+            System.out.println(populationList.toString());
         } catch (FileNotFoundException f) {
             System.out.println("There's no such File!");
         }
     }
 
-    public void sortAndWrite()
-    {
+    public void sortAndWrite() {
+        ArrayList<Integer> tempPosList = new ArrayList<>();
+        ArrayList<Integer> tempPopList = new ArrayList<>();
+        Comparator<String> comp = new Comparator<String>() {
+            @Override
+            public int compare(String a, String b) {
+                return a.compareTo(b);
+            }
+        };
+        Comparator<Integer> comp2 = new Comparator<Integer>() {
+            @Override
+            public int compare(Integer integer, Integer t1) {
+                return integer.compareTo(t1);
+            }
+        };
+
+        MergeSort.sort(countryList, populationList, comp);
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter("sortedByCountry.txt"));
+            for (int i = 0; i < countryList.size(); i++) {
+                writer.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
+                System.out.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("OH NOOOOOO");
+        }
+
+        for (int x = 0; x < populationList.size(); x++)
+            tempPopList.add(Integer.parseInt(populationList.get(x)));
+        for (int x = 0; x < tempPopList.size(); x++)
+            tempPosList.add(x);
+        MergeSort.sort(tempPopList, tempPosList, comp2);
+        for (int x = 1; x < tempPopList.size(); x++) {
+            System.out.println(tempPopList);
+            String temp = populationList.get(x);
+            String temp2 = countryList.get(x - 1);
+            if (tempPosList.get(x) > tempPosList.get(x - 1)) {
+                populationList.set(x, tempPopList.get(tempPosList.get(x - 1)).toString());
+                populationList.set(x - 1, temp);
+            }
+        }
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter("sortedByPopulation.txt"));
+            for (int i = 0; i < countryList.size(); i++) {
+                writer.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
+                System.out.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("OH NOOOOOO");
+        }
+
 
     }
     //TODO create a methods that write to sortedByCountry.txt(not yet created) and sortedByPopulations.txt (not yet created)
@@ -51,45 +101,33 @@ public class SortingCountries {
      * @param line the line read from the file
      * @return an array containing the Country in the 0th index, and the City in 1st
      */
-    public String[] getCountryFromLine(String line) {
+    public void addCountry(String line) {
         String[] split = line.split("\\s+");
 //     System.out.println(Arrays.toString(split));
-        String[] location = new String[4];
-        String country;
-        String capital;
-        double area;
-        double population;
 
-        for (int i = 0; i < split.length; i++) {
-            try {
+        areaList.add(split[split.length - 2]); //before last item in array
+        populationList.add(split[split.length - 1]); //last item in array
 
-                areaList.add(split[i]);
-                populationList.add(split[i + 1]);
-                String unseparatedLocation = "";
-                for (int j = 0; j < i; j++) {
-                    unseparatedLocation += split[j];
-                    if (j < i - 1)
-                        unseparatedLocation += " ";
-                }
-                for (String multiWordCountry : multiWordCountries) {
-                    if (unseparatedLocation.startsWith(multiWordCountry)) {
-                        country = multiWordCountry;
-                        if (multiWordCountry.length() != unseparatedLocation.length())
-                            capital = unseparatedLocation.substring(multiWordCountry.length() + 1);
-                        else
-                            location[1] = "No Capital";
-                        return location;
-                    }
-                }
-                location[0] = split[0];
-                location[1] = unseparatedLocation.substring(split[0].length() + 1);
-                return location;
-            } catch (NumberFormatException e) {
+        String unseparatedLocation = "";
+        for (int j = 0; j < split.length - 2; j++) { //combine all elements of array except the last two
+            unseparatedLocation += split[j];
+            if (j < split.length - 3) //add space between parts of the name, except for the last word
+                unseparatedLocation += " ";
+        }
 
+        for (String multiWordCountry : multiWordCountries) { //check through every multi word country name
+            if (unseparatedLocation.startsWith(multiWordCountry)) { //if the location name starts with the multi word country name
+                countryList.add(multiWordCountry);
+                if (multiWordCountry.length() != unseparatedLocation.length())
+                    capitalList.add(unseparatedLocation.substring(multiWordCountry.length() + 1));
+                else
+                    capitalList.add("No Capital");
+                return;
             }
         }
-        return null;
+        //add first word in split list
+        countryList.add(split[0]);
+        //add everything except first word (and the space that follows it) in the unseparated list
+        capitalList.add(unseparatedLocation.substring(split[0].length() + 1));
     }
-
-
-    }
+}
