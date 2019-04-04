@@ -13,10 +13,6 @@ public class SortingCountries {
     private ArrayList<String> populationList = new ArrayList<String>();
     private ArrayList<String> areaList = new ArrayList<String>();
 
-    public SortingCountries() {
-        readFile();
-    }
-
     public static void main(String[] args) {
         SortingCountries sc = new SortingCountries();
         sc.readFile();
@@ -29,18 +25,17 @@ public class SortingCountries {
             while (inFile.hasNextLine()) {
                 String line = inFile.nextLine().replace(",", "");
 
-                String[] location = getCountryFromLine(line);
-
-                System.out.println("population: " + String.format ("%.0f",location[3])); //String.format stops scientific notation
+                addCountry(line);
             }
             inFile.close();
+
+            System.out.println(populationList.toString());
         } catch (FileNotFoundException f) {
             System.out.println("There's no such File!");
         }
     }
 
-    public void sortAndWrite()
-    {
+    public void sortAndWrite() {
 
     }
     //TODO create a methods that write to sortedByCountry.txt(not yet created) and sortedByPopulations.txt (not yet created)
@@ -51,45 +46,33 @@ public class SortingCountries {
      * @param line the line read from the file
      * @return an array containing the Country in the 0th index, and the City in 1st
      */
-    public String[] getCountryFromLine(String line) {
+    public void addCountry(String line) {
         String[] split = line.split("\\s+");
 //     System.out.println(Arrays.toString(split));
-        String[] location = new String[4];
-        String country;
-        String capital;
-        double area;
-        double population;
 
-        for (int i = 0; i < split.length; i++) {
-            try {
+        areaList.add(split[split.length - 2]); //before last item in array
+        populationList.add(split[split.length - 1]); //last item in array
 
-                areaList.add(split[i]);
-                populationList.add(split[i + 1]);
-                String unseparatedLocation = "";
-                for (int j = 0; j < i; j++) {
-                    unseparatedLocation += split[j];
-                    if (j < i - 1)
-                        unseparatedLocation += " ";
-                }
-                for (String multiWordCountry : multiWordCountries) {
-                    if (unseparatedLocation.startsWith(multiWordCountry)) {
-                        country = multiWordCountry;
-                        if (multiWordCountry.length() != unseparatedLocation.length())
-                            capital = unseparatedLocation.substring(multiWordCountry.length() + 1);
-                        else
-                            location[1] = "No Capital";
-                        return location;
-                    }
-                }
-                location[0] = split[0];
-                location[1] = unseparatedLocation.substring(split[0].length() + 1);
-                return location;
-            } catch (NumberFormatException e) {
+        String unseparatedLocation = "";
+        for (int j = 0; j < split.length - 2; j++) { //combine all elements of array except the last two
+            unseparatedLocation += split[j];
+            if (j < split.length - 3) //add space between parts of the name, except for the last word
+                unseparatedLocation += " ";
+        }
 
+        for (String multiWordCountry : multiWordCountries) { //check through every multi word country name
+            if (unseparatedLocation.startsWith(multiWordCountry)) { //if the location name starts with the multi word country name
+                countryList.add(multiWordCountry);
+                if (multiWordCountry.length() != unseparatedLocation.length())
+                    capitalList.add(unseparatedLocation.substring(multiWordCountry.length() + 1));
+                else
+                    capitalList.add("No Capital");
+                return;
             }
         }
-        return null;
+        //add first word in split list
+        countryList.add(split[0]);
+        //add everything except first word (and the space that follows it) in the unseparated list
+        capitalList.add(unseparatedLocation.substring(split[0].length() + 1));
     }
-
-
-    }
+}
