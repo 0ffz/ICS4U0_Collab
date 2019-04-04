@@ -59,17 +59,18 @@ public class MergeSort {
         int leastl = l, leastr = m + 1; //minimum index in the left and right subarrays
         while (leastl <= m || leastr <= r) { //while there are still elements to merge (while either subarray still has elements)
             if (leastr > r || (leastl <= m && comp.compare(list.get(leastl), list.get(leastr)) < 0)) {
-                newl.add(list.get(leastl++)); //if there are only elements left in the right subarray, or there are elements in both and the left one is lesser, add the left one and increase the current index for the left subarray
-                new2.add(list2.get(leastl++));
+                newl.add(list.get(leastl)); //if there are only elements left in the right subarray, or there are elements in both and the left one is lesser, add the left one and increase the current index for the left subarray
+                new2.add(list2.get(leastl));
+                leastl++;
             } else {
-                newl.add(list.get(leastr++)); //otherwise add the right one
-                new2.add(list2.get(leastr++));
+                newl.add(list.get(leastr)); //otherwise add the right one
+                new2.add(list2.get(leastr));
+                leastr++;
             }
-
-            for (int x = l; x <= r; x++) {
-                list.set(x, newl.get(x - l)); //set the current range in the original list to the new list
-                list2.set (x, new2.get(x - 1));
-            }
+        }
+        for (int x = l; x <= r; x++) {
+            list.set(x, newl.get(x - l)); //set the current range in the original list to the new list
+            list2.set (x, new2.get(x - l));
         }
     }
 }
