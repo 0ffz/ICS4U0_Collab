@@ -14,7 +14,7 @@ import java.util.Scanner;
  * <h2>Course Info:<h2/>
  * ICS4U0, Krasteva, V.
  *
- * @version 2
+ * @version 3
  * @author Ivan Karlov,  addCountry by Daniel Vozny and MergeSort by Enfei Zhang
  *
  */
