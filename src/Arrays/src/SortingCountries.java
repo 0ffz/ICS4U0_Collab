@@ -31,8 +31,6 @@ public class SortingCountries {
                 addCountry(line);
             }
             inFile.close();
-
-            System.out.println(populationList.toString());
         } catch (FileNotFoundException f) {
             System.out.println("There's no such File!");
         }
@@ -59,7 +57,6 @@ public class SortingCountries {
             PrintWriter writer = new PrintWriter(new FileWriter("sortedByCountry.txt"));
             for (int i = 0; i < countryList.size(); i++) {
                 writer.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
-                System.out.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
             }
             writer.close();
         } catch (IOException e) {
@@ -68,23 +65,28 @@ public class SortingCountries {
 
         for (int x = 0; x < populationList.size(); x++)
             tempPopList.add(Integer.parseInt(populationList.get(x)));
-        for (int x = 0; x < tempPopList.size(); x++)
-            tempPosList.add(x);
-        MergeSort.sort(tempPopList, tempPosList, comp2);
-        for (int x = 1; x < tempPopList.size(); x++) {
-            System.out.println(tempPopList);
-            String temp = populationList.get(x);
-            String temp2 = countryList.get(x - 1);
-            if (tempPosList.get(x) > tempPosList.get(x - 1)) {
-                populationList.set(x, tempPopList.get(tempPosList.get(x - 1)).toString());
-                populationList.set(x - 1, temp);
+
+        for (int x = 0; x < tempPopList.size() - 1; x++) {
+            for (int y = 0; y < tempPopList.size() - x - 1; y++) {
+                if (tempPopList.get(y) < tempPopList.get(y + 1)) {
+                    String temp = populationList.get(y);
+                    String temp2 = countryList.get(y);
+                    int temp3 = tempPopList.get(y);
+                    tempPopList.set(y, tempPopList.get(y + 1));
+                    tempPopList.set(y + 1,temp3);
+                    populationList.set(y, populationList.get(y + 1));
+                    populationList.set(y + 1, temp);
+                    countryList.set(y, countryList.get(y + 1));
+                    countryList.set(y + 1, temp2);
+                    System.out.println(populationList);
+                    System.out.println(countryList);
+                }
             }
         }
         try {
             PrintWriter writer = new PrintWriter(new FileWriter("sortedByPopulation.txt"));
             for (int i = 0; i < countryList.size(); i++) {
                 writer.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
-                System.out.println(countryList.get(i) + "\t\t\t" + populationList.get(i));
             }
             writer.close();
         } catch (IOException e) {
