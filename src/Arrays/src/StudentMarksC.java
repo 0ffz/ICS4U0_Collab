@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
  * <h2>Course Info:</h2>
  * ICS4U0 with Krasteva, V.
  *
- * @author Daniel Voznyy, Enfei Zhang, Ivan Karlov
+ * @author Enfei Zhang
  * @version 1 04.02.19
  */
 

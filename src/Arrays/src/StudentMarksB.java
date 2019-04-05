@@ -1,4 +1,6 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.List;
  * <h2>Course Info:</h2>
  * ICS4U0 with Krasteva, V.
  *
- * @author Daniel Voznyy, Enfei Zhang, Ivan Karlov
+ * @author Enfei Zhang
  * @version 1 04.02.19
  */
 
@@ -21,30 +23,29 @@ public class StudentMarksB {
      * values in alphabetical order and then print them all while being spaced nicely.
      *
      * @param args [ ]  String array that allows command line
-     * parameters to be used when executing the program.
+     *             parameters to be used when executing the program.
      *
-     * <b>Local Dictionary</b>
-     * <p>
-     * <b>br</b> Instance of the BufferedReader class to read the fil A7-1.txt.
-     * <p>
-     * <b>line</b> int variable to keep track of the amount of lines in the file.
-     * <p>
-     * <b>studentNames[]</b> String array to hold the names of the students.
-     * <p>
-     * <b>studentMarks[]</b> String array to hold the marks of the students
+     *             <b>Local Dictionary</b>
+     *             <p>
+     *             <b>br</b> Instance of the BufferedReader class to read the fil A7-1.txt.
+     *             <p>
+     *             <b>line</b> int variable to keep track of the amount of lines in the file.
+     *             <p>
+     *             <b>studentNames[]</b> String array to hold the names of the students.
+     *             <p>
+     *             <b>studentMarks[]</b> String array to hold the marks of the students
      */
     public static void main(String[] args) {
         int lines = 0;
         try {
             BufferedReader br = new BufferedReader(new FileReader("A7-1.txt"));
-            while (br.readLine() != null){
+            while (br.readLine() != null) {
                 lines++;
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Oh no!");
         }
-        try{
+        try {
             BufferedReader br = new BufferedReader(new FileReader("A7-1.txt"));
             List<String> studentNames = new ArrayList<>();
             List<String> studentMarks = new ArrayList<>();
@@ -54,7 +55,7 @@ public class StudentMarksB {
                     return o1.compareTo(o2);
                 }
             };
-            for (int x = 0; x < lines; x++){
+            for (int x = 0; x < lines; x++) {
                 if (x % 2 == 0)
                     studentNames.add(br.readLine());
                 else if (x == 1)
@@ -63,12 +64,11 @@ public class StudentMarksB {
                     studentMarks.add(br.readLine());
             }
             MergeSort.sort(studentNames, studentMarks, comparator);
-            for (int x = 0; x < lines/2; x++){
+            for (int x = 0; x < lines / 2; x++) {
                 System.out.printf("%-10s%s\n", studentNames.get(x), studentMarks.get(x));
                 System.out.println();
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Oh no!");
         }
     }
