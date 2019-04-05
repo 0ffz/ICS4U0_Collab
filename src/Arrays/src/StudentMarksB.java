@@ -22,18 +22,17 @@ public class StudentMarksB {
      * This is the main method that reads the "A7-1.txt" file and calls the mergeSort() method to sort the
      * values in alphabetical order and then print them all while being spaced nicely.
      *
-     * @param args [ ]  String array that allows command line
-     *             parameters to be used when executing the program.
+     * <b>Local Dictionary</b>
+     * <p>
+     * <b>br</b> Instance of the BufferedReader class to read the fil A7-1.txt.
+     * <p>
+     * <b>line</b> int variable to keep track of the amount of lines in the file.
+     * <p>
+     * <b>studentNames[]</b> String array to hold the names of the students.
+     * <p>
+     * <b>studentMarks[]</b> String array to hold the marks of the students
      *
-     *             <b>Local Dictionary</b>
-     *             <p>
-     *             <b>br</b> Instance of the BufferedReader class to read the fil A7-1.txt.
-     *             <p>
-     *             <b>line</b> int variable to keep track of the amount of lines in the file.
-     *             <p>
-     *             <b>studentNames[]</b> String array to hold the names of the students.
-     *             <p>
-     *             <b>studentMarks[]</b> String array to hold the marks of the students
+     * @param args [ ]  String array that allows command line parameters to be used when executing the program.
      */
     public static void main(String[] args) {
         int lines = 0;

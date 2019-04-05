@@ -22,9 +22,6 @@ public class StudentMarksC {
      * This is the main method that reads the "A7-1.txt" file and calls the mergeSort() method to sort the
      * values in least to greatest order and then print them all while being spaced nicely.
      *
-     * @param args [ ]  String array that allows command line
-     * parameters to be used when executing the program.
-     *
      * <b>Local Dictionary</b>
      * <p>
      * <b>br</b> Instance of the BufferedReader class to read the fil A7-1.txt.
@@ -34,19 +31,20 @@ public class StudentMarksC {
      * <b>studentNames[]</b> String array to hold the names of the students.
      * <p>
      * <b>studentMarks[]</b> String array to hold the marks of the students
+     *
+     * @param args [ ]  String array that allows command line parameters to be used when executing the program.
      */
     public static void main(String[] args) {
         int lines = 0;
         try {
             BufferedReader br = new BufferedReader(new FileReader("A7-1.txt"));
-            while (br.readLine() != null){
+            while (br.readLine() != null) {
                 lines++;
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Oh no!");
         }
-        try{
+        try {
             BufferedReader br = new BufferedReader(new FileReader("A7-1.txt"));
             List<String> studentNames = new ArrayList<>();
             List<String> studentMarks = new ArrayList<>();
@@ -56,7 +54,7 @@ public class StudentMarksC {
                     return o1.compareTo(o2);
                 }
             };
-            for (int x = 0; x < lines; x++){
+            for (int x = 0; x < lines; x++) {
                 if (x % 2 == 0)
                     studentNames.add(br.readLine());
                 else if (x == 1)
@@ -65,12 +63,11 @@ public class StudentMarksC {
                     studentMarks.add(br.readLine());
             }
             MergeSort.sort(studentMarks, studentNames, comparator);
-            for (int x = 0; x < lines/2; x++){
+            for (int x = 0; x < lines / 2; x++) {
                 System.out.printf("%-10s%s\n", studentNames.get(x), studentMarks.get(x));
                 System.out.println();
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Oh no!");
         }
     }
