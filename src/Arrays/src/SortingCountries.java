@@ -78,8 +78,6 @@ public class SortingCountries {
                     populationList.set(y + 1, temp);
                     countryList.set(y, countryList.get(y + 1));
                     countryList.set(y + 1, temp2);
-                    System.out.println(populationList);
-                    System.out.println(countryList);
                 }
             }
         }
