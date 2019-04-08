@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * The class sorts an int array using the Comb sort algorithm, and then prints the sorted array in order, least to greatest.
  *
@@ -21,35 +23,30 @@ public class CombSort {
         double shrinkFactor = 1.3; //sets shrink factor
         boolean sorted = false;
 
-        while (sorted == false) { //loops until array is declared sorted
-
-            gap = Math.floor(gap / shrinkFactor); //decreases gap size
-
-            if (gap <= 1) {
+        while (!sorted) { //loops until array is declared sorted
+            if (gap > 1)
+                gap = Math.floor(gap / shrinkFactor); //decreases gap size
+            else {
                 gap = 1;
-                sorted = true; //array is sorted when the gap == 1
-            } else {
+                sorted = true;  //assume the array is sorted until we find out it's not
+                //we can't do this when gap is not 1, since not all elements would be compared
             }
 
+            //this for loop is what actually checks and swaps elements to sort
             //combs through the array once
-            int i = 0;
-            while (i + gap < testArray.length) {
+            for (int i = 0; i + gap < testArray.length; i++) {
                 if (testArray[i] > testArray[(int) (i + gap)]) {
                     //swaps the two values
                     int temp = testArray[i];
                     testArray[i] = testArray[(int) (i + gap)];
                     testArray[(int) (i + gap)] = temp;
 
-                    //array is still unsorted
-                    sorted = false;
-                } else {
+                    sorted = false; //if a swap was made, the array was not actually sorted
                 }
-                i++;
             }
         }
+
         //prints out now-sorted array
-        for (int i : testArray) {
-            System.out.println(i);
-        }
+        System.out.println(Arrays.toString(testArray));
     }
 }
