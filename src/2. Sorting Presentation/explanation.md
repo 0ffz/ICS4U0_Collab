@@ -3,6 +3,7 @@
 ### Intro
 
 * Created by Włodzimierz Dobosiewicz in 1980.
+* It was rediscovered by Stephen Lacey and Richard Box later in 1991.
 * Expands on bubble sort.
 * Uses a gap to eliminate `turtles`, **small values in the end**.
 * `Rabbits`, **large values in the beginning** are not a problem for either sort.
@@ -31,8 +32,8 @@ Notice how near the end, there are no large jumps up and down
 
 * Rate of shrinking is called `shrink factor`, usually 1.3.
 
-* It divides by the `shrink factor` every iteration.
-* Once gap is 1, it uses regular bubble sort, but by this point, there are no *turtles* left.
+* It divides `gap` by the `shrink factor` every iteration.
+* Once `gap` is 1, it uses regular bubble sort, but by this point, there are no turtles left.
 
 ------
 
