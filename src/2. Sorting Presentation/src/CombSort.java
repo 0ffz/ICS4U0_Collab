@@ -26,11 +26,8 @@ public class CombSort {
         while (!sorted) { //loops until array is declared sorted
             if (gap > 1)
                 gap = Math.floor(gap / shrinkFactor); //decreases gap size
-            else {
-                gap = 1;
+            else //we can't do this when gap is not 1, since not all elements would be compared
                 sorted = true;  //assume the array is sorted until we find out it's not
-                //we can't do this when gap is not 1, since not all elements would be compared
-            }
 
             //this for loop is what actually checks and swaps elements to sort
             //combs through the array once
